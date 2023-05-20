@@ -1,0 +1,19 @@
+{
+  "name": "hkcc-it-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "build": "npm install",
+    "start": "node bot.js",
+    "deploy": "npm run build && npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-telegram-bot-api": "^0.61.0",
+    "process": "^0.11.10"
+  }
+}
