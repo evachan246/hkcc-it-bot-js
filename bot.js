@@ -7,3 +7,10 @@ const token = process.env.TOKEN;
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
+
+// /pin9
+bot.onText(/\/pin9/, async (msg, match) => {
+    const { message_id: messageId } = msg;
+    const chatId = msg.chat.id;
+    await pin({bot, chatId, messageId});
+});
