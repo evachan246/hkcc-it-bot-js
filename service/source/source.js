@@ -32,20 +32,6 @@ const sourceButton = async ({bot, chatId, messageId, filename}) => {
         const stream = await fs.createReadStream(filePath)
         bot.sendDocument(chatId, stream)
     }
-
-
-    /*    query.edit_message_text(text="Selected option: {}".format(query.data))
-        path = "https://raw.githubusercontent.com/timothylam1228/HKCC-IT_BOT/master/public/source/"
-        file = str(query.data)
-        pdf = ".pdf"
-        jpg = ".jpg"
-        context.bot.sendDocument(
-            chat_id=query.message.chat.id, document=path+file+pdf)
-        if(file == "Maths Diagnostic Test"):
-        context.bot.sendPhoto(chat_id=query.message.chat.id,
-            photo='https://raw.githubusercontent.com/timothylam1228/HKCC-IT_BOT/master/public/source/maths_diagonositc_test_changed.jpg')
-        context.bot.sendMessage(
-            chat_id=query.message.chat.id, text=" Q7.6 has update Please be careful")*/
 }
 
 module.exports = {
