@@ -4,6 +4,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const { pin } = require('./service/basic/pin')
 const { start } = require('./service/basic/start')
 const { source, sourceButton } = require('./service/source/source')
+const { cat } = require('./service/other/cat')
 
 const token = process.env.TOKEN;
 
@@ -45,4 +46,14 @@ bot.on('callback_query', async (msg) => {
     }
 })
 
+
+/**
+ * For Fun
+ */
+
+bot.onText(/\/cat/, async (msg, match) => {
+    const { message_id: messageId } = msg;
+    const chatId = msg.chat.id;
+    await cat({bot, chatId, messageId});
+})
 
