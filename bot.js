@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const TelegramBot = require('node-telegram-bot-api');
 const { pin } = require('./service/basic/pin')
+const { start } = require('./service/basic/start')
 const { source, sourceButton } = require('./service/source/source')
 
 const token = process.env.TOKEN;
@@ -12,6 +13,12 @@ const bot = new TelegramBot(token, {polling: true});
 /**
  *  BOT
  */
+
+bot.onText(/\/start/, async (msg, match) => {
+    const { message_id: messageId } = msg;
+    const chatId = msg.chat.id;
+    await start({bot, chatId, messageId});
+})
 
 bot.onText(/\/pin9/, async (msg, match) => {
     const { message_id: messageId } = msg;
