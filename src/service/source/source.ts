@@ -1,9 +1,13 @@
-const fs = require('fs')
-const path = require('path');
+import TelegramBot from "node-telegram-bot-api";
+import * as fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const dir = path.join(__dirname, '../../public/source');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const dir = path.join(__dirname, '../../../public/source');
 
-const source = async ({bot, chatId}) => {
+async function getSource(bot: TelegramBot, chatId: string): Promise<void> {
     let files = fs.readdirSync(dir)
     let inline_keyboard = []
     for ( const name of files ) {
@@ -18,7 +22,8 @@ const source = async ({bot, chatId}) => {
     bot.sendMessage(chatId, 'Source', options);
 }
 
-const sourceButton = async ({bot, chatId, messageId, filename}) => {
+
+async function getSourceButton(bot: TelegramBot, chatId: string, messageId: string, filename: string): Promise<void> {
     const message = 'Selected option: ' + filename
     bot.editMessageText(message, {chat_id: chatId, message_id: messageId})
     const files = fs.readdirSync(dir)
@@ -34,7 +39,7 @@ const sourceButton = async ({bot, chatId, messageId, filename}) => {
     }
 }
 
-module.exports = {
-    source,
-    sourceButton,
+export {
+    getSource,
+    getSourceButton
 }

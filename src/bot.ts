@@ -1,10 +1,9 @@
-require('dotenv').config()
-
-const TelegramBot = require('node-telegram-bot-api');
-const { pin } = require('./service/basic/pin')
-const { start } = require('./service/basic/start')
-const { source, sourceButton } = require('./service/source/source')
-const { cat } = require('./service/other/cat')
+import TelegramBot from "node-telegram-bot-api";
+import 'dotenv/config';
+import * as pinService from './service/basic/pin.js';
+import * as startService from './service/basic/start.js';
+import * as sourceSerivce from './service/source/source.js';
+import * as catService from './service/other/cat.js';
 
 const token = process.env.TOKEN;
 
@@ -18,13 +17,13 @@ const bot = new TelegramBot(token, {polling: true});
 bot.onText(/\/start/, async (msg, match) => {
     const { message_id: messageId } = msg;
     const chatId = msg.chat.id;
-    await start({bot, chatId, messageId});
+    await startService.getStart(bot, chatId, messageId);
 })
 
 bot.onText(/\/pin9/, async (msg, match) => {
     const { message_id: messageId } = msg;
     const chatId = msg.chat.id;
-    await pin({bot, chatId, messageId});
+    await pinService.callPin(bot, chatId, messageId);
 });
 
 /**
@@ -34,7 +33,7 @@ bot.onText(/\/pin9/, async (msg, match) => {
 bot.onText(/\/source/, async (msg, match) => {
     const { message_id: messageId } = msg;
     const chatId = msg.from.id;
-    await source({bot, chatId});
+    await sourceSerivce.getSource(bot, chatId);
 })
 
 bot.on('callback_query', async (msg) => {
@@ -42,7 +41,7 @@ bot.on('callback_query', async (msg) => {
     const chatId = msg.from.id;
     const messageId = msg.message.message_id
     if (name == 'Source') {
-        await sourceButton({bot, chatId, messageId, filename: msg.data})
+        await sourceSerivce.getSourceButton(bot, chatId, messageId, msg.data);
     }
 })
 
@@ -54,6 +53,6 @@ bot.on('callback_query', async (msg) => {
 bot.onText(/\/cat/, async (msg, match) => {
     const { message_id: messageId } = msg;
     const chatId = msg.chat.id;
-    await cat({bot, chatId, messageId});
+    await catService.getCatPhoto(bot, chatId, messageId);
 })
 

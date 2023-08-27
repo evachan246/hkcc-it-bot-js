@@ -1,8 +1,7 @@
-const fetch = require("node-fetch");
-const axios = require("axios");
+import TelegramBot from "node-telegram-bot-api";
+import axios from "axios";
 
-const cat = ( {bot, chatId, messageId} ) => {
-
+async function getCatPhoto(bot: TelegramBot, chatId: string, messageId: string): Promise<void> {
     axios.get("https://api.thecatapi.com/v1/images/search")
         .then((res) => {
             bot.sendPhoto(chatId, res.data[0]['url'])
@@ -11,6 +10,6 @@ const cat = ( {bot, chatId, messageId} ) => {
         .finally(() => { })
 }
 
-module.exports = {
-    cat,
+export {
+    getCatPhoto
 }
